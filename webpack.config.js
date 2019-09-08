@@ -26,7 +26,8 @@ module.exports = {
         contentBase: __dirname,
         compress: true,
         port: 3000,
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        https: true,
     },
 
     externals: {
