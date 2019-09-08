@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
     entry: {
         quiz: "./src/index.tsx",
@@ -18,6 +20,13 @@ module.exports = {
         rules: [
             { test: /\.tsx?$/, loader: "ts-loader" },
         ]
+    },
+
+    devServer: {
+        contentBase: __dirname,
+        compress: true,
+        port: 3000,
+        host: '0.0.0.0'
     },
 
     externals: {

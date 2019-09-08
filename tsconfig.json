@@ -4,6 +4,13 @@
         "noImplicitAny": true,
         "module": "esnext",
         "target": "es6",
-        "jsx": "react"
+        "jsx": "react",
+        "moduleResolution": "node"
     },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
+    "start": "webpack-dev-server",
     "watch": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zxing/library": "^0.15.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "webpack-dev-server": "^3.8.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.2",

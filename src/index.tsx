@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Main from './Quiz/main';
+import Main from './quiz/main';
 
 ReactDOM.render(
     <Main />,
