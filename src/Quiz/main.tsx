@@ -10,9 +10,7 @@ const TEAM_NAME = 'TEAM_NAME';
 export default (): JSX.Element => {
   const [input, setInput] = React.useState<string>('');
   const [error, setError] = React.useState<string>('');
-  const [cameraError, setCameraError] = React.useState<string>('');
   const [team, setTeam] = React.useState<string>(localStorage.getItem(TEAM_NAME) || '');
-  const [cam, setCam] = React.useState<DeviceAndScanner>();
 
   const submit = () => {
     if (input.length > 3) {
@@ -49,40 +47,11 @@ export default (): JSX.Element => {
     );
   };
 
-  const noCameraFound = () => {
-    return (
-      <div style={styles(style.center)}>
-        <span>
-          {cameraError}
-        </span>
-      </div>
-    );
-  }
-
-  // TODO: How to call this without infinite loops
-  const getCamera = async (): Promise<DeviceAndScanner> => {
-    const scanner = new BrowserQRCodeReader();
-    const devices = await scanner.listVideoInputDevices();
-    if (devices.length === 0) {
-      setCameraError('No cameras found');
-      return;
-    }
-    console.log(devices.length);
-    return { scanner: scanner, deviceId: devices[devices.length - 1].deviceId } as DeviceAndScanner;
-  }
-
-
-
   if (team === '') {
     return noTeamSelected();
-  } else if (team !== '' && cam === undefined || !cam.deviceId.length) {
-    return noCameraFound();
   } else {
     return (
-      <Quiz
-        team={team}
-        deviceAndScanner={cam}
-      />
+      <Quiz team={team} />
     )
   }
 }

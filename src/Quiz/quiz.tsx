@@ -1,39 +1,40 @@
 import * as React from 'react';
 import { BrowserQRCodeReader } from '@zxing/library';
-import styles, * as style from '../styles';
-import { DeviceAndScanner } from "../../types";
 
-export default (props: { team: string, deviceAndScanner: DeviceAndScanner }) => {
-  const [error, setError] = React.useState('');
-  const { scanner, deviceId } = props.deviceAndScanner;
 
-  const decodeOnce = (codeReader: BrowserQRCodeReader, selectedDeviceId: string) => {
-    codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
-      setError(result.getText());
+type Props = { team: string };
+export default class Bla extends React.PureComponent<Props, { text: string }> {
+  scanner: BrowserQRCodeReader;
+
+  constructor(props: Props) {
+    super(props);
+    this.scanner = new BrowserQRCodeReader();
+
+    this.state = { text: 'nothing' }
+  }
+
+  decode = () => {
+    this.scanner.decodeOnceFromVideoDevice(undefined, 'video').then((result) => {
+      this.setState({ text: result.getText() });
     }).catch((err: string) => {
-      console.error(err)
-      setError(err);
-    })
+      console.warn(err);
+    }).finally(() => {
+      this.scanner.reset();
+    });
   }
 
-
-  const initScan = () => {
-    decodeOnce(scanner, deviceId);
-  }
-
-  return error
-    ?
-    <div style={styles(style.center, style.error)}>
-      {error}
-    </div>
-    :
-    (
+  render() {
+    return (
       <>
-        <button onClick={() => initScan()}>init scan</button>
+        <p>
+          {this.state.text}
+        </p>
         <video
-          onMouseDown={() => initScan()}
-          onMouseUp={() => scanner.reset()}
-          id="video" width="300" height="200" style={{ border: '1px solid black' }}></video>
-      </>)
-    ;
+          onMouseDown={() => this.decode()}
+          onMouseUp={() => {
+          }}
+          id="video" width="100%" height="80%" autoPlay={false} style={{ border: '1px solid black' }}></video>
+      </>
+    );
+  }
 }
